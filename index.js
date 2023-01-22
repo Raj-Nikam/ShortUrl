@@ -15,15 +15,22 @@ process.on("uncaughtException", (err) => {
 connectDatabase();
 
 let server;
-if (cluster.isMaster) {
-  for (let i = 0; i < numCpu; i++) {
-    cluster.fork();
-  }
-} else {
-  server = app.listen(process.env.PORT || 7200, () => {
+// if (cluster.isMaster) {
+//   for (let i = 0; i < numCpu; i++) {
+//     cluster.fork();
+//   }
+//   cluster.on('exit', () => {
+//     cluster.fork();
+//   })
+// } else {
+//   server = app.listen(process.env.PORT || 7200, () => {
+//     console.log(`Server is working on ${process.pid} http://localhost:${process.env.PORT}`);
+//   });
+// }
+
+server = app.listen(process.env.PORT || 7200, () => {
     console.log(`Server is working on ${process.pid} http://localhost:${process.env.PORT}`);
   });
-}
 
 //Unhandled error
 
